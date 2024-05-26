@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas Matemáticas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Herramientas Matemáticas</h1>
+        </div>
+
+        <!-- Calculadora de Factoriales -->
+        <div class="section">
+            <h2>Calculadora de Factoriales</h2>
+            <label for="factorialNumero">Ingrese un número</label>
+            <input type="number" id="factorialNumero" onkeydown="if(event.keyCode==13) calcularFactorial()" />
+            <button onclick="calcularFactorial()">Calcular</button>
+            <h4>Resultado:</h4>
+            <div id="resultadoFactorial" class="result"></div>
+        </div>
+
+        <!-- Conversión de Unidades -->
+        <div class="section">
+            <h2>Conversión de Unidades</h2>
+            <label for="conversionUnidad">Seleccione una conversión</label>
+            <select id="conversionUnidad">
+                <option value="kmToMiles">Kilómetros a Millas</option>
+                <option value="milesToKm">Millas a Kilómetros</option>
+                <option value="kgToLbs">Kilogramos a Libras</option>
+                <option value="lbsToKg">Libras a Kilogramos</option>
+                <!-- Agrega más opciones según sea necesario -->
+            </select>
+            <input type="number" id="conversionValor" placeholder="Ingrese el valor" onkeydown="if(event.keyCode==13) convertirUnidad()" />
+            <button onclick="convertirUnidad()">Convertir</button>
+            <h4>Resultado:</h4>
+            <div id="resultadoConversion" class="result"></div>
+        </div>
+
+        <!-- Solución de Ecuaciones Cuadráticas -->
+        <div class="section">
+            <h2>Solución de Ecuaciones Cuadráticas</h2>
+            <label for="coefA">Coeficiente a</label>
+            <input type="number" id="coefA" />
+            <label for="coefB">Coeficiente b</label>
+            <input type="number" id="coefB" />
+            <label for="coefC">Coeficiente c</label>
+            <input type="number" id="coefC" onkeydown="if(event.keyCode==13) resolverCuadratica()" />
+            <button onclick="resolverCuadratica()">Resolver</button>
+            <h4>Resultado:</h4>
+            <div id="resultadoCuadratica" class="result"></div>
+        </div>
+
+        <!-- Cálculo de Áreas y Perímetros -->
+        <div class="section">
+            <h2>Cálculo de Áreas y Perímetros</h2>
+            <label for="figura">Seleccione una figura</label>
+            <select id="figura">
+                <option value="cuadrado">Cuadrado</option>
+                <option value="rectangulo">Rectángulo</option>
+                <option value="circulo">Círculo</option>
+                <!-- Agrega más figuras según sea necesario -->
+            </select>
+            <input type="number" id="dimension1" placeholder="Ingrese la dimensión 1" />
+            <input type="number" id="dimension2" placeholder="Ingrese la dimensión 2 (si aplica)" onkeydown="if(event.keyCode==13) calcularAreaPerimetro()" />
+            <button onclick="calcularAreaPerimetro()">Calcular</button>
+            <h4>Resultado:</h4>
+            <div id="resultadoAreaPerimetro" class="result"></div>
+        </div>
+
+        <!-- Tabla de Multiplicar -->
+        <div class="section">
+            <h2>Tabla de Multiplicar</h2>
+            <label for="tablaNumero">Ingrese un número</label>
+            <input type="number" id="tablaNumero" onkeydown="if(event.keyCode==13) generarTablaMultiplicar()" />
+            <button onclick="generarTablaMultiplicar()">Generar</button>
+            <h4>Resultado:</h4>
+            <div id="resultadoTabla" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Calculadora de Factoriales
+        function calcularFactorial() {
+            let numero = document.getElementById("factorialNumero").value;
+            let resultadoDiv = document.getElementById("resultadoFactorial");
+
+            resultadoDiv.innerHTML = ""; // Limpia el contenido del div
+            let resultado = 1;
+
+            for (let i = 1; i <= numero; i++) {
+                resultado *= i;
+            }
+
+            resultadoDiv.innerHTML = resultado;
+        }
+
+        // Conversión de Unidades
+        function convertirUnidad() {
+            let conversion = document.getElementById("conversionUnidad").value;
+            let valor = parseFloat(document.getElementById("conversionValor").value);
+            let resultadoDiv = document.getElementById("resultadoConversion");
+            let resultado;
+
+            switch (conversion) {
+                case "kmToMiles":
+                    resultado = valor * 0.621371;
+                    break;
+                case "milesToKm":
+                    resultado = valor / 0.621371;
+                    break;
+                case "kgToLbs":
+                    resultado = valor * 2.20462;
+                    break;
+                case "lbsToKg":
+                    resultado = valor / 2.20462;
+                    break;
+                // Agrega más conversiones según sea necesario
+                default:
+                    resultado = "Conversión no soportada";
+            }
+
+            resultadoDiv.innerHTML = resultado;
+        }
+
+        // Solución de Ecuaciones Cuadráticas
+        function resolverCuadratica() {
+            let a = parseFloat(document.getElementById("coefA").value);
+            let b = parseFloat(document.getElementById("coefB").value);
+            let c = parseFloat(document.getElementById("coefC").value);
+            let resultadoDiv = document.getElementById("resultadoCuadratica");
+
+            let discriminante = b * b - 4 * a * c;
+            let raizDiscriminante = Math.sqrt(discriminante);
+            let x1 = (-b + raizDiscriminante) / (2 * a);
+            let x2 = (-b - raizDiscriminante) / (2 * a);
+
+            resultadoDiv.innerHTML = `x1 = ${x1}, x2 = ${x2}`;
+        }
+
+        // Cálculo de Áreas y Perímetros
+        function calcularAreaPerimetro() {
+            let figura = document.getElementById("figura").value;
+            let dimension1 = parseFloat(document.getElementById("dimension1").value);
+            let dimension2 = parseFloat(document.getElementById("dimension2").value || 0);
+            let resultadoDiv = document.getElementById("resultadoAreaPerimetro");
+            let area, perimetro;
+
+            switch (figura) {
+                case "cuadrado":
+                    area = dimension1 * dimension1;
+                    perimetro = 4 * dimension1;
+                    break;
+                case "rectangulo":
+                    area = dimension1 * dimension2;
+                    perimetro = 2 * (dimension1 + dimension2);
+                    break;
+                case "circulo":
+                    area = Math.PI * dimension1 * dimension1;
+                    perimetro = 2 * Math.PI * dimension1;
+                    break;
+                // Agrega más cálculos para diferentes figuras
+                default:
+                    area = "Figura no soportada";
+                    perimetro = "Figura no soportada";
+            }
+
+            resultadoDiv.innerHTML = `Área = ${area}, Perímetro = ${perimetro}`;
+        }
+
+        // Tabla de Multiplicar
+        function generarTablaMultiplicar() {
+            let numero = document.getElementById("tablaNumero").value;
+            let resultadoDiv = document.getElementById("resultadoTabla");
+
+            resultadoDiv.innerHTML = ""; // Limpia el contenido del div
+            let tabla = "";
+
+            for (let i = 1; i <= 10; i++) {
+                tabla += `${numero} x ${i} = ${numero * i}<br>`;
+            }
+
+            resultadoDiv.innerHTML = tabla;
+        }
+    </script>
+</body>
+</html>
